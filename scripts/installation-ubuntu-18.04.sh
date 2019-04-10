@@ -28,6 +28,9 @@ mysql -u root --execute="CREATE DATABASE bookstack;"
 mysql -u root --execute="CREATE USER 'bookstack'@'localhost' IDENTIFIED BY '$DB_PASS';"
 mysql -u root --execute="GRANT ALL ON bookstack.* TO 'bookstack'@'localhost';FLUSH PRIVILEGES;"
 
+# www folder is missing in Windows 10 Ubuntu
+mkdir -p /var/www
+
 # Download BookStack
 cd /var/www
 git clone https://github.com/BookStackApp/BookStack.git --branch release --single-branch bookstack
@@ -72,7 +75,7 @@ a2enmod rewrite
 a2enmod php7.2
 
 cat >/etc/apache2/sites-available/bookstack.conf <<EOL
-<VirtualHost *:80>
+<VirtualHost *:8008>
 	ServerName ${DOMAIN}
 
 	ServerAdmin webmaster@localhost
